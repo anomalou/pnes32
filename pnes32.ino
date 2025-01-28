@@ -78,7 +78,7 @@ void setup() {
     // }
 
     Serial.println("NoFrendo start!\n");
-    nofrendo_main(1, argv);
+    nofrendo_main();
     Serial.println("NoFrendo end!\n");
   }
 }

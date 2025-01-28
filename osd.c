@@ -224,11 +224,11 @@ void osd_shutdown()
 }
 
 char configfilename[] = "na";
-int osd_main(int argc, char *argv[])
+int osd_main()
 {
 	config.filename = configfilename;
 
-	return main_loop(argv[0], system_autodetect);
+	return main_loop();
 }
 
 //Seemingly, this will be called only once. Should call func with a freq of frequency,

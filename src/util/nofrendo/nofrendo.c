@@ -93,6 +93,10 @@ void main_eject(void)
       nes_destroy(&(console.machine.nes));
       break;
 
+   case system_homebrew:
+      //stop homebrew here (like nes_poweroff())
+      break;
+
    default:
       break;
    }
@@ -121,11 +125,24 @@ void main_quit(void)
    console.nexttype = system_unknown;
 }
 
+/* Act when user want to close NES emulation and return to homebrew */
+void homebrew_quit(void)
+{
+   main_eject();
+
+   if (NULL != console.nextfilename)
+   {
+      NOFRENDO_FREE(console.nextfilename);
+      console.nextfilename = NULL;
+   }
+   console.nexttype = system_homebrew;
+}
+
 /* brute force system autodetection */
 static system_t detect_systemtype(const char *filename)
 {
    if (NULL == filename)
-      return system_unknown;
+      return system_homebrew;
 
    if (0 == nes_isourfile(filename))
       return system_nes;
@@ -178,6 +195,10 @@ static int internal_insert(const char *filename, system_t type)
       nes_emulate();
       break;
 
+   case system_homebrew:
+
+      break;
+   
    case system_unknown:
    default:
       nofrendo_log_printf("system type unknown, playing nofrendo NES intro.\n");
@@ -201,7 +222,7 @@ void main_insert(const char *filename, system_t type)
    main_eject();
 }
 
-int nofrendo_main(int argc, char *argv[])
+int nofrendo_main()
 {
    /* initialize our system structure */
    console.filename = NULL;
@@ -216,11 +237,11 @@ int nofrendo_main(int argc, char *argv[])
 
    event_init();
 
-   return osd_main(argc, argv);
+   return osd_main();
 }
 
 /* This is the final leg of main() */
-int main_loop(const char *filename, system_t type)
+int main_loop()
 {
    vidinfo_t video;
 
@@ -240,8 +261,8 @@ int main_loop(const char *filename, system_t type)
    if (vid_init(video.default_width, video.default_height, video.driver))
       return -1;
 
-   console.nextfilename = NOFRENDO_STRDUP(filename);
-   console.nexttype = type;
+   console.nextfilename = NULL;
+   console.nexttype = system_autodetect;
 
    while (false == console.quit)
    {
