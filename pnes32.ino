@@ -14,7 +14,7 @@
 #include "hw_config.h"
 
 extern "C" {
-#include <nofrendo.h>
+#include "src/util/nofrendo/nofrendo.h"
 }
 
 int16_t bg_color;
@@ -46,36 +46,36 @@ void setup() {
     Serial.println("Filesystem mount failed! Please check hw_config.h settings.");
     gfx->println("Filesystem mount failed! Please check hw_config.h settings.");
   } else {
-    bool foundRom = false;
+    // bool foundRom = false;
 
-    File file = root.openNextFile();
-    while (file) {
-      if (file.isDirectory()) {
-        // skip
-      } else {
-        Serial.printf("ROM available: %d\n", file.available()); 
-        char *filename = (char *)file.name();
+    // File file = root.openNextFile();
+    // while (file) {
+    //   if (file.isDirectory()) {
+    //     // skip
+    //   } else {
+    //     Serial.printf("ROM available: %d\n", file.available()); 
+    //     char *filename = (char *)file.name();
 
-        Serial.printf("File path: %s\n", file.path());
+    //     Serial.printf("File path: %s\n", file.path());
 
-        int8_t len = strlen(filename);
-        if (strstr(strlwr(filename + (len - 4)), ".nes")) {
-          foundRom = true;
-          char fullFilename[256];
-          sprintf(fullFilename, "%s/%s", FSROOT, filename);
-          Serial.println(fullFilename);
-          argv[0] = fullFilename;
-          break;
-        }
-      }
+    //     int8_t len = strlen(filename);
+    //     if (strstr(strlwr(filename + (len - 4)), ".nes")) {
+    //       foundRom = true;
+    //       char fullFilename[256];
+    //       sprintf(fullFilename, "%s/%s", FSROOT, filename);
+    //       Serial.println(fullFilename);
+    //       argv[0] = fullFilename;
+    //       break;
+    //     }
+    //   }
 
-      file = root.openNextFile();
-    }
+    //   file = root.openNextFile();
+    // }
 
-    if (!foundRom) {
-      Serial.println("Failed to find rom file, please copy rom file to data folder and upload with \"ESP32 Sketch Data Upload\"");
-      argv[0] = "/";
-    }
+    // if (!foundRom) {
+    //   Serial.println("Failed to find rom file, please copy rom file to data folder and upload with \"ESP32 Sketch Data Upload\"");
+    //   argv[0] = "/";
+    // }
 
     Serial.println("NoFrendo start!\n");
     nofrendo_main(1, argv);

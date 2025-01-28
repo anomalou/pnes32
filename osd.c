@@ -8,16 +8,16 @@
 
 #include <esp_heap_caps.h>
 
-#include <noftypes.h>
+#include "src/util/nofrendo/noftypes.h"
 
-#include <event.h>
-#include <gui.h>
-#include <log.h>
-#include <nes/nes.h>
-#include <nes/nes_pal.h>
-#include <nes/nesinput.h>
-#include <nofconfig.h>
-#include <osd.h>
+#include "src/util/nofrendo/event.h"
+#include "src/util/nofrendo/gui.h"
+#include "src/util/nofrendo/log.h"
+#include "src/util/nofrendo/nes/nes.h"
+#include "src/util/nofrendo/nes/nes_pal.h"
+#include "src/util/nofrendo/nes/nesinput.h"
+#include "src/util/nofrendo/nofconfig.h"
+#include "src/util/nofrendo/osd.h"
 
 #include "hw_config.h"
 

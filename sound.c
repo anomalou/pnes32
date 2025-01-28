@@ -10,7 +10,7 @@
 #include <soc/ledc_struct.h>
 #include <esp32-hal-timer.h>
 
-#include <nes/nes.h>
+#include "src/util/nofrendo/nes/nes.h"
 
 #include "hw_config.h"
 

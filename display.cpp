@@ -1,6 +1,6 @@
 extern "C"
 {
-#include <nes/nes.h>
+#include "src/util/nofrendo/nes/nes.h"
 }
 
 #include "hw_config.h"
