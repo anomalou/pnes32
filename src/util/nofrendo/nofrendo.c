@@ -38,6 +38,7 @@
 
 /* emulated system includes */
 #include "nes/nes.h"
+#include "src/util/homebrew/homebrew.h"
 
 /* our global machine structure */
 static struct
@@ -94,7 +95,7 @@ void main_eject(void)
       break;
 
    case system_homebrew:
-      //stop homebrew here (like nes_poweroff())
+      homebrew_close();
       break;
 
    default:
@@ -126,7 +127,7 @@ void main_quit(void)
 }
 
 /* Act when user want to close NES emulation and return to homebrew */
-void homebrew_quit(void)
+void nes_quit(void)
 {
    main_eject();
 
@@ -136,6 +137,14 @@ void homebrew_quit(void)
       console.nextfilename = NULL;
    }
    console.nexttype = system_homebrew;
+}
+
+void homebrew_quit(void)
+{
+   // Set from homebrew selected rom
+   // main_insert();
+   
+   console.nexttype = system_autodetect;
 }
 
 /* brute force system autodetection */
@@ -196,7 +205,9 @@ static int internal_insert(const char *filename, system_t type)
       break;
 
    case system_homebrew:
+      nofrendo_log_printf("Homebrew starting\n");
 
+      homebrew_loop();
       break;
    
    case system_unknown:
@@ -236,6 +247,7 @@ int nofrendo_main()
       return -1;
 
    event_init();
+   homebrew_init();
 
    return osd_main();
 }

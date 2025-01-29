@@ -41,7 +41,7 @@ void setup() {
   File root = filesystem.open("/");
 
   char *argv[1];
-  Serial.println(root);
+  
   if (!root) {
     Serial.println("Filesystem mount failed! Please check hw_config.h settings.");
     gfx->println("Filesystem mount failed! Please check hw_config.h settings.");

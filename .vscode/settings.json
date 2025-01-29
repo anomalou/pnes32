@@ -11,6 +11,13 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "type_traits": "c",
-        "event.h": "c"
+        "event.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "_mingw_print_push.h": "c",
+        "log.h": "c",
+        "homebrew.h": "c",
+        "noftypes.h": "c",
+        "nofconfig.h": "c"
     }
 }

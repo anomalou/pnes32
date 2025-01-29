@@ -27,8 +27,8 @@ TimerHandle_t timer;
 extern void *mem_alloc(int size, bool prefer_fast_memory)
 {
   nofrendo_log_printf("Try allocate %d B memory\n", size);
-  size_t freeMemory = heap_caps_get_free_size(MALLOC_CAP_SPIRAM);
-  nofrendo_log_printf("Free default memory: %d\n", freeMemory);
+  nofrendo_log_printf("Free default memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
+  nofrendo_log_printf("Free SPIRAM memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
 
 	if (prefer_fast_memory)
 	{
@@ -53,6 +53,7 @@ extern void display_clear();
 
 //This runs on core 0.
 QueueHandle_t vidQueue;
+QueueHandle_t brewQueue;
 static void displayTask(void *arg)
 {
 	bitmap_t *bmp = NULL;
