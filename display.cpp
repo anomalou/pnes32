@@ -204,3 +204,8 @@ extern "C" void display_clear()
 {
     gfx->fillScreen(bg_color);
 }
+
+extern "C" void display_write_homebrew_frame(menu_t *menu)
+{
+    gfx->println(menu->lable);
+}

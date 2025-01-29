@@ -3,6 +3,7 @@
 
 #include "homebrew.h"
 #include "src/util/nofrendo/log.h"
+#include "src/util/nofrendo/osd.h"
 
 static struct 
 {
@@ -15,14 +16,18 @@ void homebrew_init(void)
     homebrew.poweroff = false;
 }
 
+menu_t *menu = NULL;
+
 void homebrew_loop(void) 
 {
+    menu = NOFRENDO_MALLOC(sizeof(*menu));
+    menu->lable = "HOMEBREW :3";
 
     nofrendo_log_printf("Homebrew started\n");
 
     while (!homebrew.poweroff) 
     {
-        
+        osd_flush_homebrew(menu);
     }
 }
 

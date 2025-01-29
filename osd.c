@@ -51,17 +51,24 @@ extern void display_init();
 extern void display_write_frame(const uint8_t *data[]);
 extern void display_clear();
 
+/* Homebrew */
+extern void display_write_homebrew_frame(menu_t *menu);
+
 //This runs on core 0.
 QueueHandle_t vidQueue;
 QueueHandle_t brewQueue;
 static void displayTask(void *arg)
 {
 	bitmap_t *bmp = NULL;
+	menu_t *menu = NULL;
 	while (1)
 	{
 		// xQueueReceive(vidQueue, &bmp, portMAX_DELAY); //skip one frame to drop to 30
 		xQueueReceive(vidQueue, &bmp, portMAX_DELAY);
+		xQueueReceive(brewQueue, &menu, portMAX_DELAY);
 		display_write_frame((const uint8_t **)bmp->line);
+		display_write_homebrew_frame(menu);
+		nofrendo_log_printf("Menu: %s\n", menu->lable);
 	}
 }
 
@@ -126,6 +133,11 @@ static void custom_blit(bitmap_t *bmp, int num_dirties, rect_t *dirty_rects)
 {
 	xQueueSend(vidQueue, &bmp, 0);
 	do_audio_frame();
+}
+
+void osd_flush_homebrew(menu_t* menu)
+{
+	xQueueSend(brewQueue, &menu, 0);
 }
 
 viddriver_t sdlDriver =
@@ -212,8 +224,9 @@ int osd_init()
 
 	display_init();
 	vidQueue = xQueueCreate(1, sizeof(bitmap_t *));
+	brewQueue = xQueueCreate(1, sizeof(menu_t *));
 	// xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 5, NULL, 1);
-	xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 0, NULL, 0);
+	xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 1, NULL, 0);
 	osd_initinput();
 	return 0;
 }
