@@ -233,16 +233,16 @@ static FILE *rom_findrom(const char *filename, rominfo_t *rominfo)
 
    ASSERT(rominfo);
 
-   nofrendo_log_printf("ROM filename 1: '%s'\n", filename);
+   // nofrendo_log_printf("ROM filename 1: '%s'\n", filename);
 
    if (NULL == filename)
       return NULL;
 
-   nofrendo_log_printf("ROM filename 2: '%s'\n", rominfo->filename);
+   // nofrendo_log_printf("ROM filename 2: '%s'\n", rominfo->filename);
    /* Make a copy of the name so we can extend it */
    osd_fullname(rominfo->filename, filename);
 
-   nofrendo_log_printf("ROM filename 3: '%s'\n", rominfo->filename);
+   // nofrendo_log_printf("ROM filename 3: '%s'\n", rominfo->filename);
 
    fp = _fopen(rominfo->filename, "rb");
    perror("fopen");
@@ -439,7 +439,12 @@ rominfo_t *rom_load(const char *filename, ppu_t *ppu)
    fp = rom_findrom(filename, rominfo);
 
    if (NULL == fp)
-      gui_sendmsg(GUI_RED, "%s not found, will use default ROM", filename);
+   {
+      if (NULL != filename)
+      {
+         gui_sendmsg(GUI_RED, "%s not found, will use default ROM", filename);
+      }
+   } 
 
    /* Get the header and stick it into rominfo struct */
    if (NULL == fp)

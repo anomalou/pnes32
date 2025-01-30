@@ -277,6 +277,8 @@ void *_my_malloc(int size, char *file, int line)
 /* free a pointer allocated with my_malloc */
 void _my_free(void **data, char *file, int line)
 {
+   printf("Try free %dB memory\n", )
+
    char fail[256];
 
    if (NULL == data || NULL == *data)

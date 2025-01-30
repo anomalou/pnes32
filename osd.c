@@ -26,9 +26,11 @@ TimerHandle_t timer;
 /* memory allocation */
 extern void *mem_alloc(int size, bool prefer_fast_memory)
 {
-  nofrendo_log_printf("Try allocate %d B memory\n", size);
+  nofrendo_log_printf("Try allocate %d B memory. FAST: %d\n", size, prefer_fast_memory);
   nofrendo_log_printf("Free default memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
   nofrendo_log_printf("Free SPIRAM memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+  nofrendo_log_printf("Free 8BIT memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_8BIT));
+  nofrendo_log_printf("Larged free 8BIT memory block size: %d\n", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 
 	if (prefer_fast_memory)
 	{
@@ -59,6 +61,8 @@ QueueHandle_t vidQueue;
 QueueHandle_t brewQueue;
 static void displayTask(void *arg)
 {
+	nofrendo_log_printf("Drawing task started!\n");
+
 	bitmap_t *bmp = NULL;
 	menu_t *menu = NULL;
 	while (1)
@@ -68,7 +72,6 @@ static void displayTask(void *arg)
 		xQueueReceive(brewQueue, &menu, portMAX_DELAY);
 		display_write_frame((const uint8_t **)bmp->line);
 		display_write_homebrew_frame(menu);
-		nofrendo_log_printf("Menu: %s\n", menu->lable);
 	}
 }
 
@@ -226,7 +229,7 @@ int osd_init()
 	vidQueue = xQueueCreate(1, sizeof(bitmap_t *));
 	brewQueue = xQueueCreate(1, sizeof(menu_t *));
 	// xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 5, NULL, 1);
-	xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 1, NULL, 0);
+	xTaskCreatePinnedToCore(&displayTask, "displayTask", 4096, NULL, 1, NULL, 0);
 	osd_initinput();
 	return 0;
 }

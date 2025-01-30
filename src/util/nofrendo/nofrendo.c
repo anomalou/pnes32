@@ -151,7 +151,7 @@ void homebrew_quit(void)
 static system_t detect_systemtype(const char *filename)
 {
    if (NULL == filename)
-      return system_homebrew;
+      return system_unknown;
 
    if (0 == nes_isourfile(filename))
       return system_nes;
@@ -217,7 +217,7 @@ static int internal_insert(const char *filename, system_t type)
          NOFRENDO_FREE(console.filename);
 
       /* oooh, recursion */
-      // return internal_insert(filename, system_nes);
+      return internal_insert(filename, system_nes);
       return 0;
    }
 
