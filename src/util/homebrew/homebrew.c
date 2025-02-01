@@ -27,7 +27,7 @@ void homebrew_loop(void)
 
     while (!homebrew.poweroff) 
     {
-        osd_flush_homebrew(menu);
+        
     }
 }
 

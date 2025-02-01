@@ -63,8 +63,8 @@ extern "C"
 
 
 // Arduino_GFX
-Arduino_DataBus *bus = new Arduino_ESP32SPI(4 /* DC */, 5 /* CS */, 18 /* SCK */, 23 /* MOSI */, 19 /* MISO */);
-Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 22 /* RST */, 1 /* rotation */, true /* IPS */, 240, 240);
+Arduino_DataBus *bus = new Arduino_ESP32SPI(9 /* DC */, 17 /* CS */, 12 /* SCK */, 11 /* MOSI */, 13 /* MISO */);
+Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, 240, 240);
 
 
 static int16_t w, h, frame_x, frame_y, frame_x_offset, frame_width, frame_height, frame_line_pixels;

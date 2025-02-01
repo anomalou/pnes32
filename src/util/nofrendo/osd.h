@@ -98,8 +98,6 @@ extern char *osd_newextension(char *string, char *ext);
 /* build a filename for a snapshot, return -ve for error */
 extern int osd_makesnapname(char *filename, int len);
 
-extern void osd_flush_homebrew(menu_t* menu);
-
 #endif /* !NSF_PLAYER */
 
 #endif /* _OSD_H_ */
