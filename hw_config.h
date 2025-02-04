@@ -79,8 +79,8 @@
 // #define FILESYSTEM_BEGIN SD.begin(2 /* SS */, SPI, 10000000, FSROOT); FS filesystem = SD;
 // #define FILESYSTEM_BEGIN SD.begin(5 /* SS */, 23, 19, 18);
 /* SD using custom SPI settings */
-#define FILESYSTEM_BEGIN SPIClass spi = SPIClass(VSPI); spi.begin(18 /* SCK */, 19 /* MISO */, 23 /* MOSI */, 15 /* CS */); SD.begin(15 /* CS */, spi, 10000000, FSROOT); FS filesystem = SD;
-
+// #define FILESYSTEM_BEGIN SPIClass spi = SPIClass(2); spi.begin(12 /* SCK */, 13 /* MISO */, 11 /* MOSI */, 15 /* CS */); SD.begin(15 /* CS */, spi, 10000000, FSROOT); FS filesystem = SD;
+#define FILESYSTEM_BEGIN SPI.begin(12 /* SCK */, 13 /* MISO */, 11 /* MOSI */, 15 /* CS */); SD.begin(15, SPI, 40000000, FSROOT); FS filesystem = SD;
 // enable audio
 // #define HW_AUDIO
 #define HW_AUDIO_EXTDAC
@@ -96,14 +96,14 @@
 // #define HW_CONTROLLER_GPIO_UP_DOWN 34
 #define HW_CONTROLLER_GPIO_REVERSE_LF
 // #define HW_CONTROLLER_GPIO_LEFT_RIGHT 35
-#define HW_CONTROLLER_GPIO_UP 25
-#define HW_CONTROLLER_GPIO_DOWN 32
-#define HW_CONTROLLER_GPIO_LEFT 35
-#define HW_CONTROLLER_GPIO_RIGHT 34
-#define HW_CONTROLLER_GPIO_SELECT 27
-#define HW_CONTROLLER_GPIO_START 26
-#define HW_CONTROLLER_GPIO_A 5
-#define HW_CONTROLLER_GPIO_B 4
+#define HW_CONTROLLER_GPIO_UP 4
+#define HW_CONTROLLER_GPIO_DOWN 5
+#define HW_CONTROLLER_GPIO_LEFT 6
+#define HW_CONTROLLER_GPIO_RIGHT 7
+#define HW_CONTROLLER_GPIO_SELECT 2
+#define HW_CONTROLLER_GPIO_START 1
+#define HW_CONTROLLER_GPIO_A 42
+#define HW_CONTROLLER_GPIO_B 41
 // #define HW_CONTROLLER_GPIO_X 23
 // #define HW_CONTROLLER_GPIO_Y 18
 

@@ -68,6 +68,9 @@ static void displayTask(void *arg)
 		// xQueueReceive(vidQueue, &bmp, portMAX_DELAY); //skip one frame to drop to 30
 		xQueueReceive(vidQueue, &bmp, portMAX_DELAY);
 		display_write_frame((const uint8_t **)bmp->line);
+		// TIMERG0.wdt_wprotect = TIMG_WDT_WKEY_VALUE;
+		// TIMERG0.wdt_feed = 1;
+		// TIMERG0.wdt_wprotect = 0;
 	}
 }
 
@@ -219,7 +222,7 @@ int osd_init()
 	display_init();
 	vidQueue = xQueueCreate(1, sizeof(bitmap_t *));
 	// xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 5, NULL, 1);
-	xTaskCreatePinnedToCore(&displayTask, "displayTask", 4096, NULL, 1, NULL, 0);
+	xTaskCreatePinnedToCore(&displayTask, "displayTask", 4096, NULL, 10, NULL, 1);
 	osd_initinput();
 	return 0;
 }

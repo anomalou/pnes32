@@ -273,7 +273,7 @@ int main_loop()
    if (vid_init(video.default_width, video.default_height, video.driver))
       return -1;
 
-   console.nextfilename = NULL;
+   console.nextfilename = "/sd/EarthBound.nes";
    console.nexttype = system_autodetect;
 
    while (false == console.quit)
