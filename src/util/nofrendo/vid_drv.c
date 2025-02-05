@@ -383,7 +383,7 @@ void vid_flush(void)
    }
 
    if (driver->custom_blit)
-      driver->custom_blit(primary_buffer, num_dirties, dirty_rects);
+      driver->custom_blit(back_buffer, num_dirties, dirty_rects);
    else
       vid_blitscreen(num_dirties, dirty_rects);
 

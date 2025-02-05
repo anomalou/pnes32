@@ -43,8 +43,8 @@ void setup() {
   char *argv[1];
   
   if (!root) {
-    Serial.println("Filesystem mount failed! Please check hw_config.h settings.");
-    gfx->println("Filesystem mount failed! Please check hw_config.h settings.");
+    Serial.println("Filesystem mount failed! Please check SD card or reconnect power cable to PNES32");
+    gfx->println("Filesystem mount failed! Please check SD card or reconnect power cable to PNES32");
   } else {
     // bool foundRom = false;
 
