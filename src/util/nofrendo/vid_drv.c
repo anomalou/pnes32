@@ -318,7 +318,7 @@ static void vid_blitscreen(int num_dirties, rect_t *dirty_rects)
 #define MAX_DIRTIES ((256 / CHUNK_WIDTH) * (240 / CHUNK_HEIGHT))
 #define DIRTY_CUTOFF ((3 * MAX_DIRTIES) / 4)
 
-#if 0
+
 INLINE int calc_dirties(rect_t *list)
 {
    bool dirty;
@@ -361,7 +361,7 @@ INLINE int calc_dirties(rect_t *list)
 
    return num_dirties;
 }
-#endif
+
 
 void vid_flush(void)
 {
@@ -378,7 +378,7 @@ void vid_flush(void)
    }
    else
    {
-      //num_dirties = calc_dirties(dirty_rects);
+      // num_dirties = calc_dirties(dirty_rects);
       num_dirties = -1;
    }
 

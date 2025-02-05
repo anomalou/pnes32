@@ -34,6 +34,9 @@
 #include "../cpu/nes6502.h"
 #include "../bitmap.h"
 
+#ifndef NES_VISIBLE_HEIGHT
+#define  NES_VISIBLE_HEIGHT   240
+#endif /* !NES_VISIBLE_HEIGHT */
 #define NES_SCREEN_WIDTH 256
 #define NES_SCREEN_HEIGHT 240
 

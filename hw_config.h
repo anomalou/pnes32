@@ -82,11 +82,11 @@
 // #define FILESYSTEM_BEGIN SPIClass spi = SPIClass(2); spi.begin(12 /* SCK */, 13 /* MISO */, 11 /* MOSI */, 15 /* CS */); SD.begin(15 /* CS */, spi, 10000000, FSROOT); FS filesystem = SD;
 #define FILESYSTEM_BEGIN SPI.begin(12 /* SCK */, 13 /* MISO */, 11 /* MOSI */, 15 /* CS */); SD.begin(15, SPI, 40000000, FSROOT); FS filesystem = SD;
 // enable audio
-// #define HW_AUDIO
+#define HW_AUDIO
 #define HW_AUDIO_EXTDAC
-#define HW_AUDIO_EXTDAC_WCLK 21
-#define HW_AUDIO_EXTDAC_BCLK 22
-#define HW_AUDIO_EXTDAC_DOUT 19
+#define HW_AUDIO_EXTDAC_WCLK 19
+#define HW_AUDIO_EXTDAC_BCLK 20
+#define HW_AUDIO_EXTDAC_DOUT 21
 #define HW_AUDIO_SAMPLERATE 22050
 
 /* controller is GPIO */
@@ -104,6 +104,7 @@
 #define HW_CONTROLLER_GPIO_START 1
 #define HW_CONTROLLER_GPIO_A 42
 #define HW_CONTROLLER_GPIO_B 41
+#define HW_CONTROLLER_GPIO_MENU 40
 // #define HW_CONTROLLER_GPIO_X 23
 // #define HW_CONTROLLER_GPIO_Y 18
 

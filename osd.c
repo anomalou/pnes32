@@ -7,6 +7,7 @@
 #include <freertos/queue.h>
 
 #include <esp_heap_caps.h>
+#include <esp_task_wdt.h>
 
 #include "src/util/nofrendo/noftypes.h"
 
@@ -61,6 +62,13 @@ QueueHandle_t vidQueue;
 static void displayTask(void *arg)
 {
 	nofrendo_log_printf("Drawing task started!\n");
+
+	esp_task_wdt_config_t config = {
+		.timeout_ms = 60000,
+		.trigger_panic = true,
+		.idle_core_mask = 0, // i.e. do not watch any idle task
+	};
+	esp_err_t err = esp_task_wdt_reconfigure(&config);
 
 	bitmap_t *bmp = NULL;
 	while (1)
@@ -176,7 +184,7 @@ void osd_getinput(void)
 	const int ev[32] = {
 		event_joypad1_up, event_joypad1_down, event_joypad1_left, event_joypad1_right,
 		event_joypad1_select, event_joypad1_start, event_joypad1_a, event_joypad1_b,
-		event_state_save, event_state_load, 0, 0,
+		event_togglepause, 0, 0, 0,
 		0, 0, 0, 0,
 		0, 0, 0, 0,
 		0, 0, 0, 0,
@@ -222,7 +230,7 @@ int osd_init()
 	display_init();
 	vidQueue = xQueueCreate(1, sizeof(bitmap_t *));
 	// xTaskCreatePinnedToCore(&displayTask, "displayTask", 2048, NULL, 5, NULL, 1);
-	xTaskCreatePinnedToCore(&displayTask, "displayTask", 4096, NULL, 10, NULL, 1);
+	xTaskCreatePinnedToCore(&displayTask, "displayTask", 4096, NULL, 5, NULL, 0);
 	osd_initinput();
 	return 0;
 }

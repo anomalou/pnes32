@@ -165,6 +165,7 @@ static bool option_showgui = false;
 static int option_wavetype = GUI_WAVENONE;
 static bool option_showpattern = false;
 static bool option_showoam = false;
+static bool option_showhomebrew = false;
 static int pattern_col = 0;
 
 /* timimg variables */
@@ -420,6 +421,11 @@ void gui_togglepattern(void)
    option_showpattern ^= true;
 }
 
+void gui_togglehomebrew(void)
+{
+   option_showhomebrew ^= true;
+}
+
 /* TODO: hack! */
 void gui_decpatterncol(void)
 {
@@ -547,6 +553,11 @@ static void gui_updateoam(void)
    ppu_dumpoam(gui_surface, 0, y + 9);
 }
 
+static void gui_homebrew(void)
+{
+   gui_rectfill(10, 10, NES_SCREEN_WIDTH - 20, NES_SCREEN_HEIGHT - 20, GUI_GRAY);
+}
+
 /* The GUI overlay */
 void gui_frame(bool draw)
 {
@@ -579,6 +590,11 @@ void gui_frame(bool draw)
    {
       osd_getmouse(&mouse_x, &mouse_y, &mouse_button);
       gui_drawmouse();
+   }
+
+   if (option_showhomebrew)
+   {
+      gui_homebrew();
    }
 }
 

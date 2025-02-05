@@ -65,7 +65,10 @@ static void func_event_eject(int code)
 static void func_event_togglepause(int code)
 {
    if (INP_STATE_MAKE == code)
+   {
       nes_togglepause();
+      gui_togglehomebrew();
+   }
 }
 
 static void func_event_soft_reset(int code)
