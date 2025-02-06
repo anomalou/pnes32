@@ -556,6 +556,11 @@ static void gui_homebrew(void)
 
    if (menu != NULL) {
       gui_textout(menu->title, 12, 12, &small, GUI_WHITE);
+
+      for (uint8 i = 0; i < menu->menu_size; i++)
+      {
+         gui_textout(menu->menu_item[i], 12, 14 + (small.height + 2) * i, &small, GUI_LTGRAY);
+      }
    }
    else
    {
