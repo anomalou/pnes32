@@ -174,6 +174,8 @@ static int internal_insert(const char *filename, system_t type)
    case system_nes:
       gui_setrefresh(NES_REFRESH_RATE);
 
+      homebrew_setrom(filename);
+
       console.machine.nes = nes_create();
       if (NULL == console.machine.nes)
       {
@@ -229,7 +231,6 @@ int nofrendo_main()
       return -1;
 
    event_init();
-   homebrew_init();
 
    return osd_main();
 }
@@ -247,6 +248,9 @@ int main_loop()
 
    if (osd_init())
       return -1;
+
+   if (homebrew_init())
+      return - 1;
 
    if (gui_init())
       return -1;

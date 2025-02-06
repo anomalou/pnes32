@@ -160,7 +160,7 @@ enum
 
 /* TODO: roll options into a structure */
 static message_t msg;
-static bool option_showfps = false;
+static bool option_showfps = true;
 static bool option_showgui = false;
 static int option_wavetype = GUI_WAVENONE;
 static bool option_showpattern = false;
@@ -549,17 +549,28 @@ static void gui_updateoam(void)
 
 static void gui_homebrew(void)
 {
-   gui_rectfill(10, 10, NES_SCREEN_WIDTH - 20, NES_SCREEN_HEIGHT - 20, GUI_GRAY);
+   gui_rectfill(10, 10, NES_SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, GUI_DKGRAY);
+   gui_rect(10, 10, NES_SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, GUI_WHITE);
+
+   menu_t *menu = homebrew();
+
+   if (menu != NULL) {
+      gui_textout(menu->title, 12, 12, &small, GUI_WHITE);
+   }
+   else
+   {
+      gui_textout("Homebrew menu is broken", 12, 12,&small, GUI_WHITE);
+   }
 }
 
 /* The GUI overlay */
-void gui_frame(bool draw)
+void gui_frame(bool draw, bitmap_t *bitmap)
 {
    gui_fps++;
    if (false == draw)
       return;
 
-   gui_surface = vid_getbuffer();
+   gui_surface = bitmap;
 
    ASSERT(gui_surface);
 
@@ -586,10 +597,10 @@ void gui_frame(bool draw)
       gui_drawmouse();
    }
 
-   // if (option_showhomebrew)
-   // {
-   //    gui_homebrew();
-   // }
+   if (homebrew_visible())
+   {
+      gui_homebrew();
+   }
 }
 
 void gui_sendmsg(int color, char *format, ...)

@@ -54,8 +54,6 @@ extern void display_init();
 extern void display_write_frame(const uint8_t *data[]);
 extern void display_clear();
 
-/* Homebrew */
-extern void display_write_homebrew_frame(menu_t *menu);
 
 //This runs on core 0.
 QueueHandle_t vidQueue;

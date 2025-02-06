@@ -344,10 +344,13 @@ static void system_video(bool draw)
    /* TODO: hack */
    if (false == draw)
    {
-      gui_frame(false);
+      gui_frame(false, nes.vidbuf);
       return;
    }
 
+   /* overlay our GUI on top of it */
+   gui_frame(true, nes.vidbuf);
+   
 #ifdef NOFRENDO_DOUBLE_FRAMEBUFFER
    /* blit the NES screen to our video surface */
    vid_blit(nes.vidbuf, 0, (NES_SCREEN_HEIGHT - NES_VISIBLE_HEIGHT) / 2,
@@ -355,7 +358,7 @@ static void system_video(bool draw)
 #endif /* NOFRENDO_DOUBLE_FRAMEBUFFER */
 
    /* overlay our GUI on top of it */
-   gui_frame(true);
+   // gui_frame(true, nes.vidbuf);
 
    /* blit to screen */
    vid_flush();

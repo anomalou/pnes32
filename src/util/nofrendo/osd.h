@@ -75,6 +75,9 @@ typedef struct sndinfo_s
    int bps;
 } sndinfo_t;
 
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 240
+
 /* get info */
 extern void osd_getvideoinfo(vidinfo_t *info);
 extern void osd_getsoundinfo(sndinfo_t *info);

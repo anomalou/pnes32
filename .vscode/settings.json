@@ -22,6 +22,9 @@
         "nes.h": "c",
         "nesstate.h": "c",
         "nesinput.h": "c",
-        "osd.h": "c"
+        "osd.h": "c",
+        "nes_ppu.h": "c",
+        "nes_apu.h": "c",
+        "nes6502.h": "c"
     }
 }

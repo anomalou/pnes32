@@ -64,7 +64,7 @@ extern "C"
 
 // Arduino_GFX
 Arduino_DataBus *bus = new Arduino_ESP32SPI(9 /* DC */, 17 /* CS */, 12 /* SCK */, 11 /* MOSI */, 13 /* MISO */);
-Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, 240, 240);
+Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
 static int16_t w, h, frame_x, frame_y, frame_x_offset, frame_width, frame_height, frame_line_pixels;
@@ -203,9 +203,4 @@ extern "C" void display_write_frame(const uint8_t *data[])
 extern "C" void display_clear()
 {
     gfx->fillScreen(bg_color);
-}
-
-extern "C" void display_write_homebrew_frame(menu_t *menu)
-{
-    gfx->println(menu->lable);
 }
