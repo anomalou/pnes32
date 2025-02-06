@@ -61,7 +61,7 @@ extern void osd_setsound(void (*playfunc)(void *buffer, int size));
 #ifndef NSF_PLAYER
 #include "noftypes.h"
 #include "vid_drv.h"
-#include "src/util/homebrew/homebrew.h"
+#include "../homebrew/homebrew.h"
 
 typedef struct vidinfo_s
 {

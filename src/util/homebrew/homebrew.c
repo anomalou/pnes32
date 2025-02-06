@@ -2,9 +2,9 @@
 #include <stdlib.h>
 
 #include "homebrew.h"
-#include "src/util/nofrendo/log.h"
-#include "src/util/nofrendo/osd.h"
-#include "nes/nes.h"
+#include "../nofrendo/log.h"
+#include "../nofrendo/osd.h"
+#include "../nofrendo/nes/nes.h"
 
 static bool option_showhomebrew = false;
 

@@ -18,6 +18,10 @@
         "log.h": "c",
         "homebrew.h": "c",
         "noftypes.h": "c",
-        "nofconfig.h": "c"
+        "nofconfig.h": "c",
+        "nes.h": "c",
+        "nesstate.h": "c",
+        "nesinput.h": "c",
+        "osd.h": "c"
     }
 }

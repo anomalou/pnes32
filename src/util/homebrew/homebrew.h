@@ -1,7 +1,7 @@
 #ifndef _HOMEBREW_H_
 #define _HOMEBREW_H_
 
-#include "src/util/nofrendo/noftypes.h"
+#include "../nofrendo/noftypes.h"
 
 #define MAX_TITLE_SIZE 255
 #define MAX_ITEM_SIZE 255
