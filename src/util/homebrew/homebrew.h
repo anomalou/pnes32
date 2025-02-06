@@ -3,14 +3,21 @@
 
 #include "src/util/nofrendo/noftypes.h"
 
+#define MAX_TITLE_SIZE 255
+#define MAX_ITEM_SIZE 255
+#define MAX_MENU_SIZE 16
+
 typedef struct menu_s {
-    char* lable;
+    char title[MAX_TITLE_SIZE];
+    char menu_item[MAX_MENU_SIZE][MAX_ITEM_SIZE];
+    void (*menu_callback)(void *data);
+    void *menu_additional_data;
 } menu_t;
 
-extern void homebrew_init(void);
-extern void homebrew_loop(void);
+static menu_t *menu = NULL;
 
-extern void homebrew_close(void);
-extern void homebrew_open(void);
+extern void homebrew_init(void);
+
+extern void homebrew_toggle(void);
 
 #endif

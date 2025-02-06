@@ -79,7 +79,6 @@ extern void gui_togglegui(void);
 extern void gui_togglewave(void);
 extern void gui_togglepattern(void);
 extern void gui_toggleoam(void);
-extern void gui_togglehomebrew(void);
 
 extern void gui_decpatterncol(void);
 extern void gui_incpatterncol(void);

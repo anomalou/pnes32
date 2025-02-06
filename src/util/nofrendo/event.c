@@ -36,6 +36,7 @@
 #include "nes/nesinput.h"
 #include "nes/nes_pal.h"
 #include "nes/nesstate.h"
+#include "homebrew/homebrew.h"
 
 /* pointer to our current system's event handler table */
 static event_t *system_events = NULL;
@@ -67,7 +68,7 @@ static void func_event_togglepause(int code)
    if (INP_STATE_MAKE == code)
    {
       nes_togglepause();
-      gui_togglehomebrew();
+      homebrew_toggle();
    }
 }
 

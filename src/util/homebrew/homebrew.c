@@ -4,43 +4,18 @@
 #include "homebrew.h"
 #include "src/util/nofrendo/log.h"
 #include "src/util/nofrendo/osd.h"
+#include "nes/nes.h"
 
-static struct 
-{
-    bool poweroff;
-} homebrew;
+static bool option_showhomebrew = false;
 
 /* Init homebrew for the first time */
 void homebrew_init(void)
 {
-    homebrew.poweroff = false;
+    option_showhomebrew = false;
+    menu = NOFRENDO_MALLOC(sizeof(menu_t));
 }
 
-menu_t *menu = NULL;
-
-void homebrew_loop(void) 
+void homebrew_toggle(void)
 {
-    menu = NOFRENDO_MALLOC(sizeof(*menu));
-    menu->lable = "HOMEBREW :3";
-
-    nofrendo_log_printf("Homebrew started\n");
-
-    while (!homebrew.poweroff) 
-    {
-        
-    }
-}
-
-void homebrew_close(void)
-{
-    homebrew.poweroff = true;
-
-    nofrendo_log_printf("Homebrew closing\n");
-} 
-
-void homebrew_open(void)
-{
-    homebrew.poweroff = true;
-
-    nofrendo_log_printf("Homebrew opening\n");
+    option_showhomebrew ^= true;
 }

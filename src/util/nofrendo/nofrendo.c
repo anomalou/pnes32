@@ -94,10 +94,6 @@ void main_eject(void)
       nes_destroy(&(console.machine.nes));
       break;
 
-   case system_homebrew:
-      homebrew_close();
-      break;
-
    default:
       break;
    }
@@ -137,14 +133,6 @@ void nes_quit(void)
       console.nextfilename = NULL;
    }
    console.nexttype = system_homebrew;
-}
-
-void homebrew_quit(void)
-{
-   // Set from homebrew selected rom
-   // main_insert();
-   
-   console.nexttype = system_autodetect;
 }
 
 /* brute force system autodetection */
@@ -202,12 +190,6 @@ static int internal_insert(const char *filename, system_t type)
          return -1;
 
       nes_emulate();
-      break;
-
-   case system_homebrew:
-      nofrendo_log_printf("Homebrew starting\n");
-
-      homebrew_loop();
       break;
    
    case system_unknown:
