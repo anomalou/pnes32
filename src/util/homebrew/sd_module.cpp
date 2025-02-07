@@ -7,10 +7,12 @@
 extern "C"
 {
 #include "../nofrendo/log.h"
+#include "../homebrew/homebrew.h"
 }
 
-extern "C" int homebrew_readlibrary(char **library)
+extern "C" int homebrew_readlibrary(char *_library)
 {
+    char (*library)[MAX_ITEM_SIZE] = _library;
     int library_size = 0;
     FS filesystem = SD;
 
@@ -32,7 +34,7 @@ extern "C" int homebrew_readlibrary(char **library)
                 {
                     nofrendo_log_printf("Is ROM\n");
                     int len = strlen(filename);
-                    // strcpy(library[library_size], filename);
+                    strcpy(library[library_size], filename);
                     library_size++;
                 }
             }
