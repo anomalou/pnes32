@@ -32,7 +32,7 @@ void homebrew_setrom(const char *rom_name)
 {
     if (rom_name == NULL)
     {
-        rom_name = NOFRENDO_STRDUP("Homebrew");
+        rom_name = NOFRENDO_STRDUP("Launcher");
     }
     nofrendo_log_printf("Set rom '%s' to homebrew\n", rom_name);
     int len = strlen(rom_name);

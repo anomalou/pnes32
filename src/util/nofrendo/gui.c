@@ -389,7 +389,7 @@ static void gui_updatefps(void)
       gui_fpsupdate = false;
    }
 
-   gui_textout(fpsbuf, gui_surface->width - 1 - 90, 1, &small, GUI_GREEN);
+   gui_textbar(fpsbuf, gui_surface->width - 1 - 90, 1, &small, GUI_WHITE, GUI_BLACK, false);
 }
 
 /* Turn FPS on/off */
@@ -555,16 +555,28 @@ static void gui_homebrew(void)
    menu_t *menu = homebrew();
 
    if (menu != NULL) {
-      gui_textout(menu->title, 12, 12, &small, GUI_WHITE);
+      char title[128];
+      sprintf(title, "Hoembrew | Playing: %s\0", menu->title);
+      gui_textout(title, 12, 12, &small, GUI_WHITE);
+
+      int v_add_offset = 0;
 
       for (uint8 i = 0; i < menu->menu_size; i++)
       {
-         gui_textout(menu->menu_item[i], menu->selected_item != i ? 12 : 24, 12 + (small.height + 2) * (i + 1), &small, GUI_LTGRAY);
+         if (menu->selected_item == i)
+         {
+            // v_add_offset = 4;
+            gui_textout(menu->menu_item[i], MENU_OFFSET, MENU_OFFSET + (small.height + 2) * (i + 1), &small, GUI_WHITE);
+         }
+         else
+         {
+            gui_textout(menu->menu_item[i], MENU_SELECTION_OFFSET, MENU_OFFSET + (small.height + 2) * (i + 1) + v_add_offset, &small, GUI_LTGRAY);
+         }
       }
    }
    else
    {
-      gui_textout("Homebrew menu is broken", 12, 12,&small, GUI_WHITE);
+      gui_textout("Homebrew menu is broken", 12, 12, &small, GUI_WHITE);
    }
 }
 

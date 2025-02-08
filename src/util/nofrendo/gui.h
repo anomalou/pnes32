@@ -30,6 +30,10 @@
 
 #define GUI_FIRSTENTRY 192
 
+/* Homebrew GUI setting*/
+#define MENU_OFFSET 12 
+#define MENU_SELECTION_OFFSET 20
+
 enum
 {
    GUI_BLACK = GUI_FIRSTENTRY,
