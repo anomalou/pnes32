@@ -32,11 +32,12 @@
 
 #ifdef NOFRENDO_DEBUG
 
-#define NOFRENDO_MALLOC(s) _my_malloc((s), __FILE__, __LINE__)
+#define NOFRENDO_MALLOC(s) _my_malloc((s), __FILE__, __LINE__, 1)
+#define NOFRENDO_MALLOC_SLOW(s) _my_malloc((s), __FILE__, __LINE__, 0)
 #define NOFRENDO_FREE(d) _my_free((void **)&(d), __FILE__, __LINE__)
 #define NOFRENDO_STRDUP(s) _my_strdup((s), __FILE__, __LINE__)
 
-extern void *_my_malloc(int size, char *file, int line);
+extern void *_my_malloc(int size, char *file, int line, bool fast);
 extern void _my_free(void **data, char *file, int line);
 extern char *_my_strdup(const char *string, char *file, int line);
 

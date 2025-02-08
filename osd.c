@@ -27,11 +27,11 @@ TimerHandle_t timer;
 /* memory allocation */
 extern void *mem_alloc(int size, bool prefer_fast_memory)
 {
-  nofrendo_log_printf("Try allocate %d B memory. FAST: %d\n", size, prefer_fast_memory);
-  nofrendo_log_printf("Free default memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
-  nofrendo_log_printf("Free SPIRAM memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
-  nofrendo_log_printf("Free 8BIT memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_8BIT));
-  nofrendo_log_printf("Larged free 8BIT memory block size: %d\n", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
+	nofrendo_log_printf("Try allocate %d B memory. FAST: %d\n", size, prefer_fast_memory);
+	nofrendo_log_printf("Free default memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
+	nofrendo_log_printf("Free SPIRAM memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+	nofrendo_log_printf("Free 8BIT memory: %d\n", heap_caps_get_free_size(MALLOC_CAP_8BIT));
+	nofrendo_log_printf("Larged free 8BIT memory block size: %d\n", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 
 	if (prefer_fast_memory)
 	{
@@ -250,9 +250,17 @@ int osd_main()
 //Seemingly, this will be called only once. Should call func with a freq of frequency,
 int osd_installtimer(int frequency, void *func, int funcsize, void *counter, int countersize)
 {
-	nofrendo_log_printf("Timer install, configTICK_RATE_HZ=%d, freq=%d\n", configTICK_RATE_HZ, frequency);
-	timer = xTimerCreate("nes", configTICK_RATE_HZ / frequency, pdTRUE, NULL, func);
-	xTimerStart(timer, 0);
+	if (timer == NULL || xTimerIsTimerActive(timer) == pdFALSE)
+	{
+		nofrendo_log_printf("Timer install, configTICK_RATE_HZ=%d, freq=%d\n", configTICK_RATE_HZ, frequency);
+		timer = xTimerCreate("nes", configTICK_RATE_HZ / frequency, pdTRUE, NULL, func);
+		xTimerStart(timer, 0);
+	}
+	else
+	{
+		nofrendo_log_printf("Timer allready exits for %d HZ, skipping creation...", frequency);
+	}
+	
 	return 0;
 }
 

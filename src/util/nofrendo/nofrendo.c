@@ -259,7 +259,7 @@ int main_loop()
    if (vid_init(video.default_width, video.default_height, video.driver))
       return -1;
 
-   console.nextfilename = "/sd/RM2.nes";
+   console.nextfilename = NULL;
    console.nexttype = system_autodetect;
 
    while (false == console.quit)

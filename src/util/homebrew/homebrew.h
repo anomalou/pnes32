@@ -22,11 +22,15 @@ typedef struct menu_s {
 
 extern int homebrew_init(void);
 extern void homebrew_setrom(const char *rom_name);
-extern int homebrew_readlibrary(char **library);
+extern int homebrew_readlibrary(char library[MAX_LIBRARY_SIZE][MAX_ITEM_SIZE]);
 
 extern menu_t *homebrew(void);
 
 extern void homebrew_toggle(void);
 extern bool homebrew_visible(void);
+
+extern void homebrew_action_up(void);
+extern void homebrew_action_down(void);
+extern void homebrew_action_select(void);
 
 #endif

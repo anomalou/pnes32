@@ -7,12 +7,11 @@
 extern "C"
 {
 #include "../nofrendo/log.h"
-#include "../homebrew/homebrew.h"
+#include "homebrew.h"
 }
 
-extern "C" int homebrew_readlibrary(char *_library)
+int homebrew_readlibrary(char library[MAX_LIBRARY_SIZE][MAX_ITEM_SIZE])
 {
-    char (*library)[MAX_ITEM_SIZE] = _library;
     int library_size = 0;
     FS filesystem = SD;
 
@@ -32,10 +31,18 @@ extern "C" int homebrew_readlibrary(char *_library)
                 nofrendo_log_printf("Found file: %s\n", filename);
                 if (ext && !strcmp(ext, ".NES"))
                 {
-                    nofrendo_log_printf("Is ROM\n");
-                    int len = strlen(filename);
-                    strcpy(library[library_size], filename);
-                    library_size++;
+                    if (library_size < 255)
+                    {
+                        nofrendo_log_printf("Is ROM\n");
+                        int len = strlen(filename);
+                        strncpy(library[library_size], filename, len);
+                        library[library_size][len] = '\0';
+                        library_size++;
+                    }
+                    else
+                    {
+                        nofrendo_log_printf("Library full, skipping: %s\n", filename);
+                    }
                 }
             }
             file = root.openNextFile();

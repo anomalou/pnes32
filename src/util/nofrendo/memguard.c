@@ -112,7 +112,7 @@ static void mem_freeguardblock(void *data, int guard_size)
 }
 
 /* allocate memory, guarding with a guard block in front and behind */
-static void *mem_guardalloc(int alloc_size, int guard_size)
+static void *mem_guardalloc(int alloc_size, int guard_size, bool fast)
 {
    void *orig;
    char *block, *check;
@@ -124,7 +124,7 @@ static void *mem_guardalloc(int alloc_size, int guard_size)
 
    /* allocate memory */
    // orig = malloc(alloc_size + (guard_size * 2));
-   orig = mem_alloc(alloc_size + (guard_size * 2), true);
+   orig = mem_alloc(alloc_size + (guard_size * 2), fast);
    if (NULL == orig)
       return NULL;
 
@@ -201,6 +201,7 @@ static void mem_addblock(void *data, int block_size, char *file, int line)
    {
       if (NULL == mem_record[i].block_addr)
       {
+         nofrendo_log_printf("Add memory block: %p\n", data);
          mem_record[i].block_addr = data;
          mem_record[i].block_size = block_size;
          mem_record[i].file_name = file;
@@ -218,8 +219,11 @@ static void mem_deleteblock(void *data, char *file, int line)
    int i;
    char fail[256];
 
+   nofrendo_log_printf("Try to delete block: %p\n", data);
+
    for (i = 0; i < MAX_BLOCKS; i++)
    {
+      nofrendo_log_printf("Found block: %p\n", mem_record[i].block_addr);
       if (data == mem_record[i].block_addr)
       {
          if (mem_checkguardblock(mem_record[i].block_addr, GUARD_LENGTH))
@@ -244,7 +248,7 @@ static void mem_deleteblock(void *data, char *file, int line)
 #ifdef NOFRENDO_DEBUG
 
 /* allocates memory and clears it */
-void *_my_malloc(int size, char *file, int line)
+void *_my_malloc(int size, char *file, int line, bool fast)
 {
    void *temp;
    char fail[256];
@@ -253,12 +257,12 @@ void *_my_malloc(int size, char *file, int line)
       mem_init();
 
    if (false != mem_debug)
-      temp = mem_guardalloc(size, GUARD_LENGTH);
+      temp = mem_guardalloc(size, GUARD_LENGTH, fast);
    else
       // temp = malloc(size);
-      temp = mem_alloc(size, true);
+      temp = mem_alloc(size, fast);
 
-   nofrendo_log_printf("_my_malloc: %d at %s:%d\n", size, file, line);
+   nofrendo_log_printf("_my_malloc %s: %d at %s:%d\n", fast == true ? "fast memory" : " ", size, file, line);
    if (NULL == temp)
    {
       sprintf(fail, "malloc: out of memory at line %d of %s.  block size: %d\n",
@@ -314,7 +318,7 @@ char *_my_strdup(const char *string, char *file, int line)
    if (NULL == string)
       return NULL;
 
-   temp = (char *)_my_malloc(strlen(string) + 1, file, line);
+   temp = (char *)_my_malloc(strlen(string) + 1, file, line, true);
    if (NULL == temp)
       return NULL;
 

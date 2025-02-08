@@ -350,6 +350,15 @@ static void func_event_palette_set_shady(int code)
 
 static void func_event_joypad1_a(int code)
 {
+   if (homebrew_visible())
+   {
+      if (code == 1)
+      {
+         homebrew_action_select();
+      }
+      
+      return;
+   }
    input_event(&kb_input, code, INP_PAD_A);
 }
 
@@ -370,11 +379,29 @@ static void func_event_joypad1_select(int code)
 
 static void func_event_joypad1_up(int code)
 {
+   if (homebrew_visible())
+   {
+      if (code == 1)
+      {
+         homebrew_action_up();
+      }
+      
+      return;
+   }
    input_event(&kb_input, code, INP_PAD_UP);
 }
 
 static void func_event_joypad1_down(int code)
 {
+   if (homebrew_visible())
+   {
+      if (code == 1)
+      {
+         homebrew_action_down();
+      }
+      
+      return;
+   }
    input_event(&kb_input, code, INP_PAD_DOWN);
 }
 
