@@ -381,7 +381,7 @@ static void func_event_joypad1_up(int code)
 {
    if (homebrew_visible())
    {
-      if (code == 1)
+      if (code == INP_STATE_MAKE)
       {
          homebrew_action_up();
       }
@@ -395,7 +395,7 @@ static void func_event_joypad1_down(int code)
 {
    if (homebrew_visible())
    {
-      if (code == 1)
+      if (code == INP_STATE_MAKE)
       {
          homebrew_action_down();
       }

@@ -549,14 +549,14 @@ static void gui_updateoam(void)
 
 static void gui_homebrew(void)
 {
-   gui_rectfill(10, 10, NES_SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, GUI_DKGRAY);
-   gui_rect(10, 10, NES_SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20, GUI_WHITE);
+   gui_rectfill(10, 10, NES_VISIBLE_WIDTH - 20, NES_VISIBLE_HEIGHT - 20, GUI_DKGRAY);
+   gui_rect(10, 10, NES_VISIBLE_WIDTH - 20, NES_VISIBLE_HEIGHT - 20, GUI_WHITE);
 
    menu_t *menu = homebrew();
 
    if (menu != NULL) {
       char title[128];
-      sprintf(title, "Hoembrew | Playing: %s\0", menu->title);
+      sprintf(title, "Homebrew | Playing: %s\0", menu->title);
       gui_textout(title, 12, 12, &small, GUI_WHITE);
 
       int v_add_offset = 0;

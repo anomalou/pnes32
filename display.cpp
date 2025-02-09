@@ -73,7 +73,7 @@ extern uint16_t myPalette[];
 
 extern void display_begin()
 {
-    gfx->begin();
+    gfx->begin(80000000);
     bg_color = gfx->color565(24, 28, 24); // DARK DARK GREY
     gfx->fillScreen(bg_color);
 

@@ -21,7 +21,6 @@ int homebrew_init(void)
     menu = NOFRENDO_MALLOC(sizeof(menu_t));
     menu->menu_size = 0;
     menu->selected_item = 0;
-    nofrendo_log_printf("Menu is %d\n", menu);
 
     library_size = homebrew_readlibrary(*library);
 
@@ -92,6 +91,15 @@ void homebrew_action_down(void)
     }
 }
 
+void homebrew_action_left(void)
+{
+
+}
+
+void homebrew_action_right(void)
+{
+}
+
 void homebrew_action_select(void)
 {
     char filename[MAX_ITEM_SIZE];
@@ -102,4 +110,8 @@ void homebrew_action_select(void)
     option_showhomebrew = false;
     menu->selected_item = 0;
     main_insert(filename, system_nes);
+}
+
+void homebrew_action_back(void)
+{
 }
