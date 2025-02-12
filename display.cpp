@@ -5,7 +5,14 @@ extern "C"
 
 #include "hw_config.h"
 
+// #define ARDUINO_GFX
+
+#ifdef ARDUINO_GFX
 #include <Arduino_GFX_Library.h>
+#else
+#include <TFT_eSPI.h>
+#endif
+
 // #include <LovyanGFX.hpp>
 
 /* M5Stack */
@@ -61,11 +68,13 @@ extern "C"
 
 #define TFT_BRIGHTNESS 128 /* 0 - 255 */
 
-
+#ifdef ARDUINO_GFX
 // Arduino_GFX
 Arduino_DataBus *bus = new Arduino_ESP32SPI(9 /* DC */, 17 /* CS */, 12 /* SCK */, 11 /* MOSI */, 13 /* MISO */);
 Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+#else
+TFT_eSPI gfx = TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
+#endif
 
 static int16_t w, h, frame_x, frame_y, frame_x_offset, frame_width, frame_height, frame_line_pixels;
 extern int16_t bg_color;
@@ -73,9 +82,15 @@ extern uint16_t myPalette[];
 
 extern void display_begin()
 {
+#ifdef ARDUINO_GFX
     gfx->begin(80000000);
     bg_color = gfx->color565(24, 28, 24); // DARK DARK GREY
     gfx->fillScreen(bg_color);
+#else
+    gfx.init();
+    gfx.setRotation(1);
+    gfx.setSwapBytes(true);
+#endif
 
 #ifdef TFT_BL
     // turn display backlight on
@@ -87,8 +102,16 @@ extern void display_begin()
 
 extern "C" void display_init()
 {
+#ifdef ARDUINO_GFX
     w = gfx->width();
     h = gfx->height();
+#else
+    w = gfx.width();
+    h = gfx.height();
+#endif
+
+    nofrendo_log_printf("Screen size: %dx%d\n", w, h);
+
     if (w < 480) // assume only 240x240 or 320x240
     {
         if (w > NES_SCREEN_WIDTH)
@@ -107,7 +130,13 @@ extern "C" void display_init()
             frame_height = NES_SCREEN_HEIGHT;
             frame_line_pixels = frame_width;
         }
+
+#ifdef ARDUINO_GFX
         frame_y = (gfx->height() - NES_SCREEN_HEIGHT) / 2;
+#else
+        frame_y = (gfx.height() - NES_SCREEN_HEIGHT) / 2;
+#endif
+
     }
     else // assume 480x320
     {
@@ -122,17 +151,31 @@ extern "C" void display_init()
 
 extern "C" void display_write_frame(const uint8_t *data[])
 {
+#ifdef ARDUINO_GFX
     gfx->startWrite();
+#else
+    gfx.startWrite();
+#endif
     if (w < 480)
     {
+#ifdef ARDUINO_GFX
         gfx->writeAddrWindow(frame_x, frame_y, frame_width, frame_height);
         for (int32_t i = 0; i < NES_SCREEN_HEIGHT; i++)
         {
             gfx->writeIndexedPixels((uint8_t *)(data[i] + frame_x_offset), myPalette, frame_line_pixels);
         }
+#else
+        for (int32_t i = 0; i < NES_SCREEN_HEIGHT; i++)
+        {
+            gfx.setAddrWindow(frame_x, i, frame_width, 1);
+            gfx.pushPixels((void *)(data[i] + frame_x_offset), frame_line_pixels);
+        }
+#endif
     }
+#ifdef ARDUINO_GFX
     else
     {
+
         /* ST7796 480 x 320 resolution */
 
         /* Option 1:
@@ -197,10 +240,21 @@ extern "C" void display_write_frame(const uint8_t *data[])
         //     }
         // }
     }
+#endif
+
+#ifdef ARDUINO_GFX
     gfx->endWrite();
+#else
+    gfx.endWrite();
+#endif
+    
 }
 
 extern "C" void display_clear()
 {
+#ifdef ARDUINO_GFX
     gfx->fillScreen(bg_color);
+#else
+    gfx.fillScreen(TFT_BLACK);
+#endif
 }
