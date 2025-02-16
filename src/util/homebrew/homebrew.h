@@ -10,15 +10,19 @@
 
 typedef void (*menu_callback)(void *data);
 
+typedef struct menu_item_s {
+    char name[MAX_TITLE_SIZE];
+    menu_callback select;
+    menu_callback left;
+    menu_callback right;
+    void *additional_data;
+} menu_item_t;
+
 typedef struct menu_s {
     char title[MAX_TITLE_SIZE];
-    char menu_item[MAX_MENU_SIZE][MAX_ITEM_SIZE];
     int menu_size;
     int selected_item;
-    menu_callback select[MAX_MENU_SIZE];
-    menu_callback left[MAX_MENU_SIZE];
-    menu_callback right[MAX_MENU_SIZE];
-    void *menu_additional_data[MAX_MENU_SIZE];
+    menu_item_t menu_item[MAX_MENU_SIZE];
 } menu_t;
 
 extern int homebrew_init(void);

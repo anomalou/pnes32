@@ -14,6 +14,13 @@ int library_size = 0;
 menu_t *menu = NULL;
 static bool option_showhomebrew = false;
 
+menu_t *homebrew_main_menu_init(void)
+{
+    
+
+    return 0;
+}
+
 /* Init homebrew for the first time */
 int homebrew_init(void)
 {

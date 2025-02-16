@@ -5,12 +5,13 @@ extern "C"
 
 #include "hw_config.h"
 
-// #define ARDUINO_GFX
+#define ARDUINO_GFX
 
 #ifdef ARDUINO_GFX
+#define ESP32
 #include <Arduino_GFX_Library.h>
 #else
-#include <TFT_eSPI.h>
+
 #endif
 
 // #include <LovyanGFX.hpp>
@@ -73,7 +74,7 @@ extern "C"
 Arduino_DataBus *bus = new Arduino_ESP32SPI(9 /* DC */, 17 /* CS */, 12 /* SCK */, 11 /* MOSI */, 13 /* MISO */);
 Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, SCREEN_WIDTH, SCREEN_HEIGHT);
 #else
-TFT_eSPI gfx = TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 #endif
 
 static int16_t w, h, frame_x, frame_y, frame_x_offset, frame_width, frame_height, frame_line_pixels;
@@ -87,9 +88,7 @@ extern void display_begin()
     bg_color = gfx->color565(24, 28, 24); // DARK DARK GREY
     gfx->fillScreen(bg_color);
 #else
-    gfx.init();
-    gfx.setRotation(1);
-    gfx.setSwapBytes(true);
+    
 #endif
 
 #ifdef TFT_BL
@@ -106,8 +105,7 @@ extern "C" void display_init()
     w = gfx->width();
     h = gfx->height();
 #else
-    w = gfx.width();
-    h = gfx.height();
+    
 #endif
 
     nofrendo_log_printf("Screen size: %dx%d\n", w, h);
@@ -134,7 +132,7 @@ extern "C" void display_init()
 #ifdef ARDUINO_GFX
         frame_y = (gfx->height() - NES_SCREEN_HEIGHT) / 2;
 #else
-        frame_y = (gfx.height() - NES_SCREEN_HEIGHT) / 2;
+        
 #endif
 
     }
@@ -154,22 +152,21 @@ extern "C" void display_write_frame(const uint8_t *data[])
 #ifdef ARDUINO_GFX
     gfx->startWrite();
 #else
-    gfx.startWrite();
+    
 #endif
     if (w < 480)
     {
 #ifdef ARDUINO_GFX
+        // unsigned long start = millis();
         gfx->writeAddrWindow(frame_x, frame_y, frame_width, frame_height);
         for (int32_t i = 0; i < NES_SCREEN_HEIGHT; i++)
         {
             gfx->writeIndexedPixels((uint8_t *)(data[i] + frame_x_offset), myPalette, frame_line_pixels);
         }
+
+        // nofrendo_log_printf("Frame drawn at: %d millis\n", millis() - start);
 #else
-        for (int32_t i = 0; i < NES_SCREEN_HEIGHT; i++)
-        {
-            gfx.setAddrWindow(frame_x, i, frame_width, 1);
-            gfx.pushPixels((void *)(data[i] + frame_x_offset), frame_line_pixels);
-        }
+        
 #endif
     }
 #ifdef ARDUINO_GFX
@@ -245,7 +242,7 @@ extern "C" void display_write_frame(const uint8_t *data[])
 #ifdef ARDUINO_GFX
     gfx->endWrite();
 #else
-    gfx.endWrite();
+
 #endif
     
 }
@@ -255,6 +252,6 @@ extern "C" void display_clear()
 #ifdef ARDUINO_GFX
     gfx->fillScreen(bg_color);
 #else
-    gfx.fillScreen(TFT_BLACK);
+
 #endif
 }

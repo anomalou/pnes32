@@ -549,15 +549,15 @@ static void gui_updateoam(void)
 
 static void gui_homebrew(void)
 {
-   gui_rectfill(10, 10, NES_VISIBLE_WIDTH - 20, NES_VISIBLE_HEIGHT - 20, GUI_DKGRAY);
-   gui_rect(10, 10, NES_VISIBLE_WIDTH - 20, NES_VISIBLE_HEIGHT - 20, GUI_WHITE);
+   gui_rectfill(NES_WIDTH_OFFSET, NES_HEIGHT_OFFSET, NES_VISIBLE_WIDTH, NES_VISIBLE_HEIGHT, GUI_DKGRAY);
+   gui_rect(NES_WIDTH_OFFSET, NES_HEIGHT_OFFSET, NES_VISIBLE_WIDTH, NES_VISIBLE_HEIGHT, GUI_WHITE);
 
    menu_t *menu = homebrew();
 
    if (menu != NULL) {
       char title[128];
       sprintf(title, "Homebrew | Playing: %s\0", menu->title);
-      gui_textout(title, 12, 12, &small, GUI_WHITE);
+      gui_textout(title, NES_WIDTH_OFFSET + 5, NES_HEIGHT_OFFSET + 5, &small, GUI_WHITE);
 
       int v_add_offset = 0;
 
@@ -566,17 +566,17 @@ static void gui_homebrew(void)
          if (menu->selected_item == i)
          {
             // v_add_offset = 4;
-            gui_textout(menu->menu_item[i], MENU_OFFSET, MENU_OFFSET + (small.height + 2) * (i + 1), &small, GUI_WHITE);
+            gui_textout(menu->menu_item[i], MENU_SELECTION_OFFSET, MENU_OFFSET_Y + (small.height + 2) * (i + 1), &small, GUI_WHITE);
          }
          else
          {
-            gui_textout(menu->menu_item[i], MENU_SELECTION_OFFSET, MENU_OFFSET + (small.height + 2) * (i + 1) + v_add_offset, &small, GUI_LTGRAY);
+            gui_textout(menu->menu_item[i], MENU_OFFSET_X, MENU_OFFSET_Y + (small.height + 2) * (i + 1) + v_add_offset, &small, GUI_LTGRAY);
          }
       }
    }
    else
    {
-      gui_textout("Homebrew menu is broken", 12, 12, &small, GUI_WHITE);
+      gui_textout("Homebrew menu is broken", MENU_OFFSET_X, MENU_OFFSET_Y, &small, GUI_WHITE);
    }
 }
 

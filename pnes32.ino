@@ -36,51 +36,10 @@ void setup() {
 
   // filesystem defined in hw_config.h
   FILESYSTEM_BEGIN
-
-  // find first rom file (*.nes)
-  File root = filesystem.open("/");
-
-  char *argv[1];
   
-  if (!root) {
-    Serial.println("Filesystem mount failed! Please check SD card or reconnect power cable to PNES32");
-    // gfx->println("Filesystem mount failed! Please check SD card or reconnect power cable to PNES32");
-  } else {
-    // bool foundRom = false;
-
-    // File file = root.openNextFile();
-    // while (file) {
-    //   if (file.isDirectory()) {
-    //     // skip
-    //   } else {
-    //     Serial.printf("ROM available: %d\n", file.available()); 
-    //     char *filename = (char *)file.name();
-
-    //     Serial.printf("File path: %s\n", file.path());
-
-    //     int8_t len = strlen(filename);
-    //     if (strstr(strlwr(filename + (len - 4)), ".nes")) {
-    //       foundRom = true;
-    //       char fullFilename[256];
-    //       sprintf(fullFilename, "%s/%s", FSROOT, filename);
-    //       Serial.println(fullFilename);
-    //       argv[0] = fullFilename;
-    //       break;
-    //     }
-    //   }
-
-    //   file = root.openNextFile();
-    // }
-
-    // if (!foundRom) {
-    //   Serial.println("Failed to find rom file, please copy rom file to data folder and upload with \"ESP32 Sketch Data Upload\"");
-    //   argv[0] = "/";
-    // }
-
-    Serial.println("NoFrendo start!\n");
-    nofrendo_main();
-    Serial.println("NoFrendo end!\n");
-  }
+  Serial.println("NoFrendo start!\n");
+  nofrendo_main();
+  Serial.println("NoFrendo end!\n");
 }
 
 void loop() {

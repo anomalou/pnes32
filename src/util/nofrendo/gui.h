@@ -31,8 +31,9 @@
 #define GUI_FIRSTENTRY 192
 
 /* Homebrew GUI setting*/
-#define MENU_OFFSET 12 
-#define MENU_SELECTION_OFFSET 20
+#define MENU_OFFSET_X 5 
+#define MENU_OFFSET_Y 5 
+#define MENU_SELECTION_OFFSET 10
 
 enum
 {

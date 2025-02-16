@@ -262,6 +262,8 @@ int main_loop()
    console.nextfilename = NULL;
    console.nexttype = system_autodetect;
 
+   nofrendo_log_printf("Start main loop\n");
+
    while (false == console.quit)
    {
       if (internal_insert(console.nextfilename, console.nexttype))
