@@ -5,7 +5,7 @@ extern "C"
 
 #include "hw_config.h"
 
-// #define ARDUINO_GFX
+#define ARDUINO_GFX
 
 #ifdef ARDUINO_GFX
 #include <Arduino_GFX_Library.h>
@@ -71,7 +71,7 @@ extern "C"
 #ifdef ARDUINO_GFX
 // Arduino_GFX
 Arduino_DataBus *bus = new Arduino_ESP32SPI(9 /* DC */, 17 /* CS */, 12 /* SCK */, 11 /* MOSI */, 13 /* MISO */);
-Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 1 /* rotation */, true /* IPS */, SCREEN_WIDTH, SCREEN_HEIGHT);
+Arduino_ST7789 *gfx = new Arduino_ST7789(bus, 8 /* RST */, 3 /* rotation */, false /* IPS */, SCREEN_WIDTH, SCREEN_HEIGHT);
 #else
 TFT_eSPI gfx = TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
 #endif

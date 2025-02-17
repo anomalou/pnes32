@@ -76,7 +76,7 @@ typedef struct sndinfo_s
 } sndinfo_t;
 
 #define SCREEN_WIDTH 240
-#define SCREEN_HEIGHT 240
+#define SCREEN_HEIGHT 320
 
 /* get info */
 extern void osd_getvideoinfo(vidinfo_t *info);
