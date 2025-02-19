@@ -1,5 +1,5 @@
 # IMPORTANT
-This repository based on android-nofrendo project and use nofrendo code itself. All right belongs only to their authors.
+This repository based on arduino-nofrendo project and use nofrendo code itself. All right belongs only to their authors.
 
 This repository was made only by my curiosity and experimentation wishes
 
